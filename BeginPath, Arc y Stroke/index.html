@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeginPath, Arc y Stroke</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="myCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(225, 250, 50, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(275, 250, 50, 0, 2 * Math.PI);
+        ctx.stroke();
+    </script>
+</body>
+
+</html>
