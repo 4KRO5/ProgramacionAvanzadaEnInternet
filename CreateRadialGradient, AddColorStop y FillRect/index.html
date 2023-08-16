@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font y FillText</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="myCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        const grd = ctx.createRadialGradient(250, 250, 0, 250, 250, 100);
+        grd.addColorStop(0, "red");
+        grd.addColorStop(1, "black");
+
+        ctx.beginPath();
+        ctx.fillStyle = grd;
+        ctx.arc(250, 250, 100, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+    </script>
+</body>
+
+</html>
