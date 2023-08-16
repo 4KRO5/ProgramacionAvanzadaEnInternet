@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreateLinearGradient, AddColorStop y FillRect</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="myCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        ctx.font = "50px Times New Roman";
+
+        const grd = ctx.createLinearGradient(125, 0, 250, 0);
+        grd.addColorStop(0.15, "#1e1e1e");
+        grd.addColorStop(0.8, "#ff0000");
+        grd.addColorStop(0.9, "#207ede");
+
+        ctx.fillStyle = grd;
+        ctx.strokeStyle = grd;
+        ctx.fillRect(125, 175, 250, 50);
+
+        ctx.font = "50px Times New Roman";
+        ctx.fillText("Hola Mundo", 125, 275);
+        ctx.strokeText("Hola Mundo", 125, 325);
+    </script>
+</body>
+
+</html>
