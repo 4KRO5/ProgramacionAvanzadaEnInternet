@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MouseUp & MouseDown</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="myCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+        var fig = true; var active = false;
+        var col = getRandomRGBA();
+
+        canvas.addEventListener("mousedown", (event) => {
+            active = !active;
+            if (fig) {
+                ctx.beginPath();
+                ctx.fillStyle = col;
+                ctx.arc(event.layerX - 12, event.layerY - 12, 50, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.stroke();
+            } else {
+                ctx.fillStyle = col;
+                ctx.fillRect(event.layerX - 62, event.layerY - 62, 100, 100);
+                ctx.strokeRect(event.layerX - 62, event.layerY - 62, 100, 100);
+            }
+        });
+
+        canvas.addEventListener("mouseover", (event) => {
+            col = getRandomRGBA();
+        });
+
+        canvas.addEventListener("mouseout", (event) => {
+            fig = !fig
+        });
+
+        canvas.addEventListener("mouseup", (event) => {
+            active = !active;
+        });
+
+        canvas.addEventListener("mousemove", (event) => {
+            if (active) {
+                ctx.beginPath();
+                ctx.fillStyle = "black";
+                ctx.arc(event.layerX - 12, event.layerY - 12, 2, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+        });
+
+        function getRandomRGBA() {
+            const red = Math.floor(Math.random() * 256);
+            const green = Math.floor(Math.random() * 256);
+            const blue = Math.floor(Math.random() * 256);
+            const alpha = 0.5;
+            return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+        }
+    </script>
+</body>
+
+</html>
