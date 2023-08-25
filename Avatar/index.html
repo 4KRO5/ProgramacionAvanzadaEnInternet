@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Dibujar el cielo
+        ctx.fillStyle = '#87CEEB'; // Color de cielo azul claro
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Dibujar el sol
+        ctx.beginPath();
+        ctx.arc(70, 70, 50, 0, Math.PI * 2);
+        ctx.fillStyle = 'yellow';
+        ctx.fill();
+        ctx.closePath();
+
+        // Dibujar el césped
+        ctx.fillStyle = '#00FF00'; // Color de césped verde
+        ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
+
+        // Dibujar montañas
+        ctx.beginPath();
+        ctx.moveTo(300, canvas.height - 100);
+        ctx.lineTo(450, 200);
+        ctx.lineTo(600, canvas.height - 100);
+        ctx.fillStyle = '#A9A9A9'; // Color de montañas gris
+        ctx.fill();
+        ctx.closePath();
+
+        // Dibujar río
+        ctx.fillStyle = '#87CEEB'; // Color de agua azul claro
+        ctx.fillRect(290, canvas.height - 100, 400, 100);
+
+        // Dibujar árboles
+        ctx.fillStyle = '#8B4513'; // Color de tronco de árbol marrón
+        ctx.fillRect(50, canvas.height - 150, 20, 50);
+
+        ctx.beginPath();
+        ctx.arc(60, canvas.height - 170, 30, 0, Math.PI * 2);
+        ctx.fillStyle = '#228B22'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        // Cuerpo
+        ctx.beginPath();
+        ctx.arc(250, 500, 120, 3, 6.5, false);
+        ctx.fillStyle = '#d9534f';
+        ctx.fill();
+        ctx.closePath();
+
+        // Brazos
+        ctx.fillRect(100, 450, 50, 50);
+        ctx.fillRect(350, 450, 50, 50);
+
+        // Dibujar la cabeza
+        ctx.beginPath();
+        ctx.arc(250, 250, 150, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffd699';
+        ctx.fill();
+        ctx.closePath();
+
+        // Dibujar el cabello
+        ctx.beginPath();
+        ctx.moveTo(100, 150);
+        ctx.bezierCurveTo(180, 100, 380, 200, 363, 150); // Contorno superior del cabello
+        ctx.quadraticCurveTo(250, 40, 100, 150); // Contorno lateral del cabello
+        ctx.closePath();
+        ctx.fillStyle = '#583535'; // Color del cabello
+        ctx.fill();
+
+        // Dibujar los ojos
+        // Ojo izquierdo
+        ctx.beginPath();
+        ctx.arc(190, 220, 30, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        // Pupila izquierda
+        ctx.beginPath();
+        ctx.arc(190, 220, 10, 0, Math.PI * 2);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.closePath();
+
+        // Detalles del ojo izquierdo
+        ctx.beginPath();
+        ctx.arc(200, 215, 5, 0, Math.PI * 2); // Resalte en el ojo izquierdo
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        // Ojo derecho
+        ctx.beginPath();
+        ctx.arc(310, 220, 30, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        // Pupila derecha
+        ctx.beginPath();
+        ctx.arc(310, 220, 10, 0, Math.PI * 2);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+        ctx.closePath();
+
+        // Detalles del ojo derecho
+        ctx.beginPath();
+        ctx.arc(320, 215, 5, 0, Math.PI * 2); // Resalte en el ojo derecho
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        // Dibujar la boca
+        ctx.beginPath();
+        ctx.arc(250, 280, 80, 0.5, Math.PI - 0.5, false);
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#d9534f';
+        ctx.stroke();
+        ctx.closePath();
+
+        // Dibujar nariz
+        ctx.beginPath();
+        ctx.arc(250, 290, 10, 1.8, Math.PI - 5, false);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#d9534f';
+        ctx.stroke();
+        ctx.closePath();
+    </script>
+</body>
+
+</html>
