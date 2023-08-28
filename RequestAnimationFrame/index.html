@@ -57,18 +57,30 @@
             switch (dir) {
                 case 1:
                     y -= speed;
+                    if (y < -50) {
+                        y = 500;
+                    }
                     break;
 
                 case 2:
                     y += speed;
+                    if (y > 500) {
+                        y = -50
+                    }
                     break;
 
                 case 3:
                     x += speed;
+                    if (x > 500) {
+                        x = -50;
+                    }
                     break;
 
                 case 4:
-                    x -= speed;
+                    x -= speed
+                    if (x < -50) {
+                        x = 500;
+                    }
                     break;
             }
 
