@@ -22,7 +22,7 @@
         var ctx = canvas.getContext('2d');
 
         var x = 225, y = 225;
-        var dir = 0, speed = 10;
+        var dir = 0, speed = 5;
 
         window.requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
@@ -34,6 +34,7 @@
         }());
 
         document.addEventListener("keydown", (e) => {
+            console.log(e.keyCode);
             switch (e.keyCode) {
                 case 87:
                     dir = 1;
@@ -49,6 +50,10 @@
 
                 case 65:
                     dir = 4;
+                    break;
+
+                case 32:
+                    speed += 5;
                     break;
             }
         })
