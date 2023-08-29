@@ -24,6 +24,7 @@
         var x = 225, y = 225;
         var dir = 0, speed = 5;
         var tx = 0, ty = 0;
+        var px = 125, py = 350;
 
         window.requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
@@ -63,30 +64,18 @@
             switch (dir) {
                 case 1:
                     y -= speed;
-                    if (y < -50) {
-                        y = 500;
-                    }
                     break;
 
                 case 2:
                     y += speed;
-                    if (y > 500) {
-                        y = -50
-                    }
                     break;
 
                 case 3:
                     x += speed;
-                    if (x > 500) {
-                        x = -50;
-                    }
                     break;
 
                 case 4:
                     x -= speed
-                    if (x < -50) {
-                        x = 500;
-                    }
                     break;
             }
 
@@ -98,6 +87,34 @@
                 ty = Math.floor(Math.random() * 501);
             }
 
+            if (x < px + 250 &&
+                x + 50 > px &&
+                y < py + 25 &&
+                y + 50 > py) {
+                switch (dir) {
+                    case 1:
+                        y += speed;
+                        dir = 0;
+                        break;
+
+                    case 2:
+                        y -= speed;
+                        dir = 0;
+                        break;
+
+                    case 3:
+                        x -= speed;
+                        dir = 0;
+                        break;
+
+                    case 4:
+                        x += speed;
+                        dir = 0;
+                        break;
+                }
+
+            }
+
             frame();
             window.requestAnimationFrame(update);
         }
@@ -107,9 +124,11 @@
             ctx.fillStyle = getRandomRGBA();
             ctx.fillRect(x, y, 50, 50);
 
-
             ctx.fillStyle = "black";
             ctx.fillRect(tx, ty, 25, 25);
+
+            ctx.fillStyle = "gray";
+            ctx.fillRect(px, py, 250, 25);
         }
         update();
 
