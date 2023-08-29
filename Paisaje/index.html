@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Dibujar el cielo
+        ctx.fillStyle = '#87CEEB'; // Color de cielo azul claro
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Dibujar el sol
+        ctx.beginPath();
+        ctx.arc(70, 70, 50, 0, Math.PI * 2);
+        ctx.fillStyle = 'yellow';
+        ctx.fill();
+        ctx.closePath();
+
+        // nube
+        ctx.beginPath();
+        ctx.arc(350, 80, 50, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(300, 90, 50, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(400, 100, 50, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(350, 100, 50, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+
+        // Dibujar el césped
+        ctx.fillStyle = '#00FF00'; // Color de césped verde
+        ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
+
+        // Dibujar montañas
+        ctx.beginPath();
+        ctx.moveTo(300, canvas.height - 100);
+        ctx.lineTo(450, 200);
+        ctx.lineTo(600, canvas.height - 100);
+        ctx.fillStyle = '#A9A9A9'; // Color de montañas gris
+        ctx.fill();
+        ctx.closePath();
+
+        // Dibujar río
+        ctx.fillStyle = '#87CEEB'; // Color de agua azul claro
+        ctx.fillRect(350, canvas.height - 100, 25, 100);
+
+        // Dibujar árboles
+        ctx.fillStyle = '#8B4513'; // Color de tronco de árbol marrón
+        ctx.fillRect(50, canvas.height - 150, 20, 50);
+
+        ctx.beginPath();
+        ctx.arc(60, canvas.height - 170, 30, 0, Math.PI * 2);
+        ctx.fillStyle = '#228B22'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(75, canvas.height - 170, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(60, canvas.height - 175, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(65, canvas.height - 155, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(47, canvas.height - 160, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(47, canvas.height - 180, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(75, canvas.height - 185, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'red'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.fillStyle = 'yellow'; // Color de hojas de
+        ctx.fillRect(125, 300, 150, 150);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 300, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 320, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 340, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 360, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 380, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 400, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 420, 150, 5);
+
+        ctx.fillStyle = 'Brown'; // Color de hojas de
+        ctx.fillRect(125, 440, 150, 5);
+
+        ctx.fillStyle = "Brown"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(100, 300);
+        ctx.lineTo(300, 300);
+        ctx.lineTo(200, 250);
+        ctx.fill();
+
+        ctx.fillStyle = 'Brown'; // Color de ventana
+        ctx.fillRect(210, 320, 50, 50);
+
+        ctx.fillStyle = 'white'; // Color de ventana
+        ctx.fillRect(212, 323, 45, 45);
+
+        ctx.strokeStyle = "black"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(235, 320);
+        ctx.lineTo(235, 370);
+        ctx.stroke();
+
+        ctx.strokeStyle = "black"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(212, 350);
+        ctx.lineTo(260, 350);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(10, 420);
+        ctx.lineTo(15, 410);
+        ctx.lineTo(20, 430);
+        ctx.lineTo(25, 420);
+        ctx.lineTo(30, 430);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(460, 420);
+        ctx.lineTo(465, 410);
+        ctx.lineTo(470, 430);
+        ctx.lineTo(475, 420);
+        ctx.lineTo(480, 430);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(80, 420);
+        ctx.lineTo(85, 410);
+        ctx.lineTo(90, 430);
+        ctx.lineTo(95, 420);
+        ctx.lineTo(100, 430);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(400, 420);
+        ctx.lineTo(410, 410);
+        ctx.lineTo(420, 430);
+        ctx.lineTo(425, 420);
+        ctx.lineTo(430, 430);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(430, 460);
+        ctx.lineTo(440, 440);
+        ctx.lineTo(445, 460);
+        ctx.lineTo(450, 430);
+        ctx.lineTo(460, 470);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(300, 460);
+        ctx.lineTo(305, 440);
+        ctx.lineTo(310, 460);
+        ctx.lineTo(315, 430);
+        ctx.lineTo(320, 470);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(225, 480);
+        ctx.lineTo(230, 460);
+        ctx.lineTo(240, 490);
+        ctx.lineTo(245, 460);
+        ctx.lineTo(250, 490);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green"; // Color de techo
+        ctx.beginPath();
+        ctx.moveTo(50, 465);
+        ctx.lineTo(55, 450);
+        ctx.lineTo(60, 460);
+        ctx.lineTo(65, 435);
+        ctx.lineTo(70, 470);
+        ctx.stroke();
+
+        ctx.fillStyle = 'brown'; // Color de agua azul claro
+        ctx.fillRect(140, 350, 60, 100);
+
+        ctx.beginPath();
+        ctx.arc(185, 400, 5, 0, Math.PI * 2);
+        ctx.fillStyle = 'white'; // Color de hojas de árbol verde oscuro
+        ctx.fill();
+        ctx.closePath();
+    </script>
+</body>
+
+</html>
