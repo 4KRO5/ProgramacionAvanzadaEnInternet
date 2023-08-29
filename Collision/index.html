@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RequestAnimationFrame</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: black;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="500" id="myCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        var x = 225, y = 225;
+        var dir = 0, speed = 5;
+        var tx = 0, ty = 0;
+
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 15);
+                };
+        }());
+
+        document.addEventListener("keydown", (e) => {
+            console.log(e.keyCode);
+            switch (e.keyCode) {
+                case 87:
+                    dir = 1;
+                    break;
+
+                case 83:
+                    dir = 2;
+                    break;
+
+                case 68:
+                    dir = 3;
+                    break;
+
+                case 65:
+                    dir = 4;
+                    break;
+
+                case 32:
+                    speed += 5;
+                    break;
+            }
+        })
+
+        function update() {
+            switch (dir) {
+                case 1:
+                    y -= speed;
+                    if (y < -50) {
+                        y = 500;
+                    }
+                    break;
+
+                case 2:
+                    y += speed;
+                    if (y > 500) {
+                        y = -50
+                    }
+                    break;
+
+                case 3:
+                    x += speed;
+                    if (x > 500) {
+                        x = -50;
+                    }
+                    break;
+
+                case 4:
+                    x -= speed
+                    if (x < -50) {
+                        x = 500;
+                    }
+                    break;
+            }
+
+            if (x < tx + 20 &&
+                x + 50 > tx &&
+                y < ty + 20 &&
+                y + 50 > ty) {
+                tx = Math.floor(Math.random() * 501);
+                ty = Math.floor(Math.random() * 501);
+            }
+
+            frame();
+            window.requestAnimationFrame(update);
+        }
+
+        function frame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = getRandomRGBA();
+            ctx.fillRect(x, y, 50, 50);
+
+
+            ctx.fillStyle = "black";
+            ctx.fillRect(tx, ty, 25, 25);
+        }
+        update();
+
+        function getRandomRGBA() {
+            const red = Math.floor(Math.random() * 256);
+            const green = Math.floor(Math.random() * 256);
+            const blue = Math.floor(Math.random() * 256);
+            const alpha = 0.5;
+            return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+        }
+    </script>
+</body>
+
+</html>
