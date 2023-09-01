@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrawImage with Transparency</title>
+    <style>
+        canvas {
+            background-color: white;
+            border-color: white;
+            border-style: solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="500" height="282" id="myCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var ctx = canvas.getContext('2d');
+
+        //Fondo
+        ctx.fillStyle = 'rgb(178, 238, 254)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        //Bloques
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(252, 145, 101)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(15, 130, 30, 30);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(18, 133, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(39, 133, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(18, 154, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(39, 154, 3, 3);
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(252, 145, 101)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(80, 35, 30, 30);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(84, 39, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(84, 58, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(103, 39, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(103, 58, 3, 3);
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(252, 145, 101)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(110, 35, 30, 30);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(114, 39, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(114, 58, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(133, 39, 3, 3);
+
+        ctx.fillStyle = 'black';
+        ctx.fillRect(133, 58, 3, 3);
+
+        //BLoques secundarios
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        ctx.strokeStyle = 'black';
+        ctx.rect(190, 115, 90, 155);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(132, 191, 255)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(175, 98, 90, 155);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(186, 110, 7, 7);
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(245, 110, 7, 7);
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(245, 235, 7, 7);
+
+        ctx.beginPath();
+        ctx.fillStyle = 'black';
+        ctx.strokeStyle = 'black';
+        ctx.rect(130, 175, 90, 90);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(255, 195, 184)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(112, 162, 90, 90);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(120, 170, 7, 7);
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(186, 170, 7, 7);
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(120, 237, 7, 7);
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(186, 237, 7, 7);
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(74, 212, 106)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(425, 162, 90, 90);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(433, 170, 7, 7);
+
+        ctx.fillStyle = 'gray';
+        ctx.fillRect(433, 237, 7, 7);
+
+        // Boca del Tubo
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(330, 160, 60, 30);
+
+        // Proporciones de la boca del tubo
+        const mouthSegments = [
+            { color: 'rgb(35, 125, 34)', width: 3 },
+            { color: 'rgb(87, 218, 94)', width: 3 },
+            { color: 'rgb(37, 159, 40)', width: 2 },
+            { color: 'rgb(89, 213, 108)', width: 6 },
+            { color: 'rgb(32, 135, 26)', width: 5 },
+            { color: 'rgb(86, 181, 77)', width: 2 },
+            { color: 'rgb(30, 134, 10)', width: 15 },
+            { color: 'rgb(88, 201, 95)', width: 3 },
+            { color: 'rgb(0, 18, 0)', width: 3 },
+            { color: 'rgb(50, 83, 55)', width: 2 },
+            { color: 'rgb(52, 118, 47)', width: 5 },
+            { color: 'rgb(0, 9, 8)', width: 4 },
+            { color: 'rgb(59, 76, 54)', width: 2 },
+            { color: 'rgb(0, 9, 8)', width: 3 }
+        ];
+
+        // Coordenadas iniciales
+        let posX = 331;
+        let posY = 161;
+        let totalMouthWidth = mouthSegments.reduce((total, segment) => total + segment.width, 0);
+
+        for (let segment of mouthSegments) {
+            const width = (segment.width / totalMouthWidth) * 58; // Escala el ancho al cuerpo del tuba
+            const height = 28;
+
+            ctx.fillStyle = segment.color;
+            ctx.fillRect(posX, posY, width, height);
+
+            posX += width;
+        }
+
+        ctx.strokeStyle = 'black';
+        ctx.strokeRect(335, 190, 50, 90);
+
+        // Proporciones del cuerpo del tubo
+        const mouthColors = [
+            { color: 'rgb(35, 125, 34)', width: 3 },
+            { color: 'rgb(87, 218, 94)', width: 3 },
+            { color: 'rgb(37, 159, 40)', width: 2 },
+            { color: 'rgb(89, 213, 108)', width: 6 },
+            { color: 'rgb(32, 135, 26)', width: 5 },
+            { color: 'rgb(86, 181, 77)', width: 2 },
+            { color: 'rgb(30, 134, 10)', width: 15 },
+            { color: 'rgb(88, 201, 95)', width: 3 },
+            { color: 'rgb(0, 18, 0)', width: 3 },
+            { color: 'rgb(50, 83, 55)', width: 2 },
+            { color: 'rgb(52, 118, 47)', width: 5 },
+            { color: 'rgb(0, 9, 8)', width: 4 },
+            { color: 'rgb(59, 76, 54)', width: 2 },
+            { color: 'rgb(0, 9, 8)', width: 3 }
+        ];
+
+        // Coordenadas iniciales
+        let x = 336;
+        let y = 191;
+        totalMouthWidth = mouthColors.reduce((total, segment) => total + segment.width, 0);
+
+        for (let segment of mouthColors) {
+            const width = (segment.width / totalMouthWidth) * 48; // Escala el ancho al cuerpo del tuba
+            const height = 60;
+
+            ctx.fillStyle = segment.color;
+            ctx.fillRect(x, y, width, height);
+
+            x += width;
+        }
+
+        const mario = new Image();
+        mario.onload = function () {
+            ctx.drawImage(mario, 255, 202, 25, 50);
+        };
+        mario.src = "Super_Mario.png";
+
+        const venus = new Image();
+        venus.onload = function () {
+            ctx.drawImage(venus, 345, 99, 30, 60);
+        };
+        venus.src = "Venus_Fire_Trap_Red.png";
+
+        const fire = new Image();
+        fire.onload = function () {
+            ctx.drawImage(fire, 290, 180, 15, 15);
+        };
+        fire.src = "FireballEnemy.png";
+
+        //Suelo
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(255, 190, 186)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(1, 252, canvas.width - 2, 10);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(239, 145, 109)';
+        ctx.strokeStyle = 'black';
+        ctx.rect(1, 262, canvas.width - 2, 19);
+        ctx.fill();
+        ctx.stroke();
+
+        // Propiedades para el piso
+        const floorSegment = { color: 'black', width: 4, height: 4 };
+
+
+        ctx.fillStyle = 'black';
+        for (let y = 265; y <= 500; y += 6) {
+            for (let x = 5; x <= 700; x += 10) {
+                ctx.fillRect(x, 265, 4, 4);
+                ctx.fillRect(x+2, 268, 4, 4);
+                ctx.fillRect(x+5, 270, 4, 4);
+                ctx.fillRect(x+6, 272, 4, 4);
+            }
+        }
+
+    </script>
+</body>
+
+</html>
