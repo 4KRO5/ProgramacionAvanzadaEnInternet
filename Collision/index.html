@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CollisionStop</title>
+    <title>Object</title>
     <style>
         canvas {
             background-color: white;
@@ -20,12 +20,6 @@
     <script>
         const canvas = document.getElementById("myCanvas");
         const ctx = canvas.getContext("2d");
-
-        var x = 225, y = 225;
-        var dir = 0, speed = 5;
-        var tx = 0, ty = 0;
-        var px = 125, py = 350;
-
         window.requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
                 window.webkitRequestAnimationFrame ||
@@ -35,84 +29,130 @@
                 };
         }());
 
+        // Cuerpo de objeto
+        class objectBody {
+            constructor(x, y, width, height, colour) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.colour = colour;
+            }
+
+            // Se instancia la función "detectCollision" dentro de la clase cuerpo de objeto
+            detectCollision(object) {
+                return !!(this.x < object.x + object.width &&
+                    this.x + this.width > object.x &&
+                    this.y < object.y + object.height &&
+                    this.y + this.height > object.y);
+            }
+
+            print() {
+                ctx.fillStyle = this.colour;
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            }
+        };
+
+        // Declaración de los objetos
+        var square = new objectBody(225, 225, 50, 50); // Se crea el objeto square apartir de la clase "Cuerpo de objeto"
+        square.direction = 0; // Se agregan atributos unicos al objeto square
+        square.speed = 5;
+        square.getRandomRGBA = function () { // Se agrega una función unica para el objeto square
+            const red = Math.floor(Math.random() * 256);
+            const green = Math.floor(Math.random() * 256);
+            const blue = Math.floor(Math.random() * 256);
+            const alpha = 0.5;
+            ctx.fillStyle = this.colour = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+        }
+
+        var food = new objectBody(235, 25, 25, 25, 'black'); // Se crea el objecto food apartir de la clase "Cuerpo de objeto"
+
+        var wall = new objectBody(75, 375, 350, 25, 'gray'); // Se crea el objecto wall apartir de la clase "Cuerpo de objeto"
+        var wall2 = new objectBody(75, 100, 350, 25, 'gray');
+
         document.addEventListener("keydown", (e) => {
-            console.log(e.keyCode);
-            switch (e.keyCode) {
-                case 87:
-                    dir = 1;
+            switch (e.key) {
+                case "w":
+                    square.direction = 1;
                     break;
 
-                case 83:
-                    dir = 2;
+                case "s":
+                    square.direction = 2;
                     break;
 
-                case 68:
-                    dir = 3;
+                case "d":
+                    square.direction = 3;
                     break;
 
-                case 65:
-                    dir = 4;
+                case "a":
+                    square.direction = 4;
                     break;
 
-                case 32:
-                    speed += 5;
+                case " ":
+                    square.speed += 5;
                     break;
             }
         })
 
         function update() {
-            switch (dir) {
+            switch (square.direction) {
                 case 1:
-                    y -= speed;
+                    square.y -= square.speed;
+                    if (square.y < -50) {
+                        square.y = 500;
+                    }
                     break;
 
                 case 2:
-                    y += speed;
+                    square.y += square.speed;
+                    if (square.y > 500) {
+                        square.y = -50;
+                    }
                     break;
 
                 case 3:
-                    x += speed;
+                    square.x += square.speed;
+                    if (square.x > 500) {
+                        square.x = -50;
+                    }
                     break;
 
                 case 4:
-                    x -= speed
+                    square.x -= square.speed;
+                    if (square.x < -50) {
+                        square.x = 500;
+                    }
                     break;
             }
 
-            if (x < tx + 20 &&
-                x + 50 > tx &&
-                y < ty + 20 &&
-                y + 50 > ty) {
-                tx = Math.floor(Math.random() * 501);
-                ty = Math.floor(Math.random() * 501);
+            // Se llama la función "detectCollision" instanciada dentro del "Cuerpo de Objeto"
+            if (square.detectCollision(food) || food.detectCollision(wall) || food.detectCollision(wall2)) {
+                food.x = Math.floor(Math.random() * 476);
+                food.y = Math.floor(Math.random() * 476);
             }
 
-            if (x < px + 250 &&
-                x + 50 > px &&
-                y < py + 25 &&
-                y + 50 > py) {
-                switch (dir) {
+            if (square.detectCollision(wall) || square.detectCollision(wall2)) {
+                switch (square.direction) {
                     case 1:
-                        y += speed;
-                        dir = 0;
+                        square.y += square.speed;
+                        square.direction = 0;
                         break;
 
                     case 2:
-                        y -= speed;
-                        dir = 0;
+                        square.y -= square.speed;
+                        square.direction = 0;
                         break;
 
                     case 3:
-                        x -= speed;
-                        dir = 0;
+                        square.x -= square.speed;
+                        square.direction = 0;
                         break;
 
                     case 4:
-                        x += speed;
-                        dir = 0;
+                        square.x += square.speed;
+                        square.direction = 0;
                         break;
                 }
-
             }
 
             frame();
@@ -121,24 +161,16 @@
 
         function frame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = getRandomRGBA();
-            ctx.fillRect(x, y, 50, 50);
 
-            ctx.fillStyle = "black";
-            ctx.fillRect(tx, ty, 25, 25);
+            square.getRandomRGBA(); // Se llama la función unica dentro del objeto square
+            square.print(); // Se llama la función "print" instanciada en la clase "Cuerpo de Objeto"
 
-            ctx.fillStyle = "gray";
-            ctx.fillRect(px, py, 250, 25);
+            food.print();
+
+            wall.print();
+            wall2.print();
         }
         update();
-
-        function getRandomRGBA() {
-            const red = Math.floor(Math.random() * 256);
-            const green = Math.floor(Math.random() * 256);
-            const blue = Math.floor(Math.random() * 256);
-            const alpha = 0.5;
-            return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
-        }
     </script>
 </body>
 
