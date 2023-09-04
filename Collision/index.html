@@ -29,6 +29,9 @@
                 };
         }());
 
+        var pause = false;
+        var score = 0;
+
         // Cuerpo de objeto
         class objectBody {
             constructor(x, y, width, height, colour) {
@@ -72,63 +75,86 @@
 
         document.addEventListener("keydown", (e) => {
             switch (e.key) {
-                case "w":
-                    square.direction = 1;
+                case "p":
+                    pause = !pause;
                     break;
 
-                case "s":
-                    square.direction = 2;
+                case "Escape":
+                    pause = !pause;
                     break;
+            }
 
-                case "d":
-                    square.direction = 3;
-                    break;
+            if (!pause) {
+                switch (e.key) {
+                    case "w":
+                        square.direction = 1;
+                        break;
 
-                case "a":
-                    square.direction = 4;
-                    break;
+                    case "s":
+                        square.direction = 2;
+                        break;
 
-                case " ":
-                    square.speed += 5;
-                    break;
+                    case "d":
+                        square.direction = 3;
+                        break;
+
+                    case "a":
+                        square.direction = 4;
+                        break;
+
+                    case "ArrowUp":
+                        square.speed += 5;
+                        break;
+
+                    case "ArrowDown":
+                        if (square.speed > 5) {
+                            square.speed -= 5;
+                        }
+                        break;
+                }
             }
         })
 
         function update() {
-            switch (square.direction) {
-                case 1:
-                    square.y -= square.speed;
-                    if (square.y < -50) {
-                        square.y = 500;
-                    }
-                    break;
+            if (!pause) {
+                switch (square.direction) {
+                    case 1:
+                        square.y -= square.speed;
+                        if (square.y < -50) {
+                            square.y = 500;
+                        }
+                        break;
 
-                case 2:
-                    square.y += square.speed;
-                    if (square.y > 500) {
-                        square.y = -50;
-                    }
-                    break;
+                    case 2:
+                        square.y += square.speed;
+                        if (square.y > 500) {
+                            square.y = -50;
+                        }
+                        break;
 
-                case 3:
-                    square.x += square.speed;
-                    if (square.x > 500) {
-                        square.x = -50;
-                    }
-                    break;
+                    case 3:
+                        square.x += square.speed;
+                        if (square.x > 500) {
+                            square.x = -50;
+                        }
+                        break;
 
-                case 4:
-                    square.x -= square.speed;
-                    if (square.x < -50) {
-                        square.x = 500;
-                    }
-                    break;
+                    case 4:
+                        square.x -= square.speed;
+                        if (square.x < -50) {
+                            square.x = 500;
+                        }
+                        break;
+                }
             }
 
             // Se llama la función "detectCollision" instanciada dentro del "Cuerpo de Objeto"
             if (square.detectCollision(food) || food.detectCollision(wall) || food.detectCollision(wall2)) {
                 food.x = Math.floor(Math.random() * 476);
                 food.y = Math.floor(Math.random() * 476);
+                if (!food.detectCollision(wall)) {
+                    score += 10;
+                }
             }
 
             if (square.detectCollision(wall) || square.detectCollision(wall2)) {
@@ -161,14 +187,36 @@
 
         function frame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            square.getRandomRGBA(); // Se llama la función unica dentro del objeto square
+            if (!pause) {
+                square.getRandomRGBA(); // Se llama la función unica dentro del objeto square
+            }
             square.print(); // Se llama la función "print" instanciada en la clase "Cuerpo de Objeto"
 
             food.print();
 
             wall.print();
             wall2.print();
+
+            ctx.font = '15px Arial';
+            ctx.fillText("Score: " + score, 10, 20);
+
+            if (pause) {
+                ctx.fillStyle = 'rgba(128, 128, 128, 0.5)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                var text = "Pause";
+
+                // Mide la longitud del texto
+                var textWidth = ctx.measureText(text).width;
+
+                // Calcula las coordenadas para centrar el texto
+                var x = (canvas.width - textWidth) / 2;
+                var y = (canvas.height + 25) / 2;
+
+                ctx.font = '48px Arial';
+                ctx.fillStyle = 'black';
+                ctx.fillText(text, x, y);
+            }
         }
         update();
     </script>
