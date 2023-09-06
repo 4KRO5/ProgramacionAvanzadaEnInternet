@@ -15,6 +15,10 @@
 </head>
 
 <body>
+    <audio id="bgMusic" loop autoplay play>
+        <source src="haunted house.mp3" type="audio/mpeg">
+    </audio>
+
     <canvas width="500" height="500" id="myCanvas"></canvas>
 
     <script>
@@ -56,11 +60,32 @@
             }
         };
 
+        var sonidos = []; // Array para almacenar las pistas de audio
+
+        function crearSonido(src) {
+            const sonido = new Audio(src);
+            sonidos.push(sonido); // Agregar la pista al array
+            sonido.addEventListener('ended', function () {
+                // Eliminar la pista una vez que haya terminado de reproducirse
+                const index = sonidos.indexOf(sonido);
+                if (index > -1) {
+                    sonidos.splice(index, 1);
+                }
+            });
+            return sonido;
+        }
+
         // Declaración de los objetos
-        var square = new objectBody(225, 225, 50, 50); // Se crea el objeto square apartir de la clase "Cuerpo de objeto"
-        square.direction = 0; // Se agregan atributos unicos al objeto square
-        square.speed = 5;
-        square.getRandomRGBA = function () { // Se agrega una función unica para el objeto square
+        var kirby = new objectBody(225, 225, 50, 50); // Se crea el objeto square apartir de la clase "Cuerpo de objeto"
+        kirby.direction = 0; // Se agregan atributos unicos al objeto square
+        kirby.speed = 5;
+        kirby.image = new Image();
+        kirby.image.src = "kirby.png";
+        kirby.image.onload = function () { // Se agrega una función unica para el objeto square
+            // Dibuja la imagen de Kirby en lugar de un rectángulo
+            ctx.drawImage(kirby.image, kirby.x, kirby.y, kirby.width, kirby.height);
+        };
+        kirby.getRandomRGBA = function () { // Se agrega una función unica para el objeto square
             const red = Math.floor(Math.random() * 256);
             const green = Math.floor(Math.random() * 256);
             const blue = Math.floor(Math.random() * 256);
@@ -87,28 +112,28 @@
             if (!pause) {
                 switch (e.key) {
                     case "w":
-                        square.direction = 1;
+                        kirby.direction = 1;
                         break;
 
                     case "s":
-                        square.direction = 2;
+                        kirby.direction = 2;
                         break;
 
                     case "d":
-                        square.direction = 3;
+                        kirby.direction = 3;
                         break;
 
                     case "a":
-                        square.direction = 4;
+                        kirby.direction = 4;
                         break;
 
                     case "ArrowUp":
-                        square.speed += 5;
+                        kirby.speed += 5;
                         break;
 
                     case "ArrowDown":
-                        if (square.speed > 5) {
-                            square.speed -= 5;
+                        if (kirby.speed > 5) {
+                            kirby.speed -= 5;
                         }
                         break;
                 }
@@ -117,68 +142,67 @@
 
         function update() {
             if (!pause) {
-                switch (square.direction) {
+                switch (kirby.direction) {
                     case 1:
-                        square.y -= square.speed;
-                        if (square.y < -50) {
-                            square.y = 500;
+                        kirby.y -= kirby.speed;
+                        if (kirby.y < -50) {
+                            kirby.y = 500;
                         }
                         break;
 
                     case 2:
-                        square.y += square.speed;
-                        if (square.y > 500) {
-                            square.y = -50;
+                        kirby.y += kirby.speed;
+                        if (kirby.y > 500) {
+                            kirby.y = -50;
                         }
                         break;
 
                     case 3:
-                        square.x += square.speed;
-                        if (square.x > 500) {
-                            square.x = -50;
+                        kirby.x += kirby.speed;
+                        if (kirby.x > 500) {
+                            kirby.x = -50;
                         }
                         break;
 
                     case 4:
-                        square.x -= square.speed;
-                        if (square.x < -50) {
-                            square.x = 500;
+                        kirby.x -= kirby.speed;
+                        if (kirby.x < -50) {
+                            kirby.x = 500;
                         }
                         break;
                 }
             }
 
             // Se llama la función "detectCollision" instanciada dentro del "Cuerpo de Objeto"
-            if (square.detectCollision(food) || food.detectCollision(wall) || food.detectCollision(wall2)) {
+            if (kirby.detectCollision(food) || food.detectCollision(wall) || food.detectCollision(wall2)) {
                 food.x = Math.floor(Math.random() * 476);
                 food.y = Math.floor(Math.random() * 476);
-                if (!food.detectCollision(wall)) {
+                if (!food.detectCollision(wall) && !food.detectCollision(wall2)) {
                     score += 10;
+                    const sonido = crearSonido("Sound effect one.mp3");
+                    sonido.play();
                 }
             }
 
-            if (square.detectCollision(wall) || square.detectCollision(wall2)) {
-                switch (square.direction) {
+            if (kirby.detectCollision(wall) || kirby.detectCollision(wall2)) {
+                switch (kirby.direction) {
                     case 1:
-                        square.y += square.speed;
-                        square.direction = 0;
+                        kirby.y += kirby.speed;
                         break;
 
                     case 2:
-                        square.y -= square.speed;
-                        square.direction = 0;
+                        kirby.y -= kirby.speed;
                         break;
 
                     case 3:
-                        square.x -= square.speed;
-                        square.direction = 0;
+                        kirby.x -= kirby.speed;
                         break;
 
                     case 4:
-                        square.x += square.speed;
-                        square.direction = 0;
+                        kirby.x += kirby.speed;
                         break;
                 }
+                kirby.direction = 0;
             }
 
             frame();
@@ -188,9 +212,10 @@
         function frame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (!pause) {
-                square.getRandomRGBA(); // Se llama la función unica dentro del objeto square
+                bgMusic.play();
+                kirby.getRandomRGBA(); // Se llama la función unica dentro del objeto kirby
             }
-            square.print(); // Se llama la función "print" instanciada en la clase "Cuerpo de Objeto"
+            ctx.drawImage(kirby.image, kirby.x, kirby.y, kirby.width, kirby.height);
 
             food.print();
 
@@ -205,16 +230,17 @@
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 var text = "Pause";
+                ctx.font = '48px Arial';
+                ctx.fillStyle = 'black';
 
                 // Mide la longitud del texto
                 var textWidth = ctx.measureText(text).width;
 
                 // Calcula las coordenadas para centrar el texto
                 var x = (canvas.width - textWidth) / 2;
-                var y = (canvas.height + 25) / 2;
+                var y = (canvas.height + 35) / 2;
 
-                ctx.font = '48px Arial';
-                ctx.fillStyle = 'black';
+                bgMusic.pause();
                 ctx.fillText(text, x, y);
             }
         }
